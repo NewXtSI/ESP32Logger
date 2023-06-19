@@ -54,7 +54,7 @@ extern ESP32Logger Log;
 #define DBGSTP Log.stop();
 #define DBGLEV(loglevel) Log.setLogLevel(ESP32LogLevel::loglevel);
 #define DBGCOD(debugexpression) debugexpression
-#define DBGLOG(loglevel, logmsg, ...) { String logstr = String(__func__) + ": " + String(logmsg); Log.log(ESP32LogLevel::loglevel, logstr.c_str(), ##__VA_ARGS__); }
+#define DBGLOG(loglevel, logmsg, ...) { String logstr = String(__PRETTY_FUNCTION__) + ": " + String(logmsg); Log.log(ESP32LogLevel::loglevel, logstr.c_str(), ##__VA_ARGS__); }
 #define DBGCHK(loglevel, cond, logmsg, ...) if(!(cond)) DBGLOG(loglevel, logmsg, ##__VA_ARGS__)
 
 #else // #ifdef ESP32DEBUGGING
