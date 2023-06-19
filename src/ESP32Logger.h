@@ -12,7 +12,9 @@
 
 enum class ESP32LogLevel {
 	Error,
+	Warning,
 	Info,
+	Verbose,
 	Debug
 };
 
