@@ -6,11 +6,11 @@
 // 
 
 
-ESP32Logger Log;
-
 
 #include "ESP32Logger.h"
 #include <stdarg.h>
+
+ESP32Logger Log;
 
 
 void ESP32Logger::init(Print* output, ESP32Timestamp useTimestamp) {
@@ -52,17 +52,23 @@ void ESP32Logger::log(ESP32LogLevel logLevel, const char* format, ...) {
 		print(buffer);
 	}
 	switch (logLevel) {
+	case ESP32LogLevel::Verbose:
+		print("\e[1;37mVERB ");
+		break;
+	case ESP32LogLevel::Warning:
+		print("\e[1;93mWARN ");
+		break;
 	case ESP32LogLevel::Debug:
-		print("DBG ");
+		print("\e[1;90mDBG  ");
 		break;
 	case ESP32LogLevel::Error:
-		print("ERR ");
+		print("\e[5m\e[1;91mERR  ");
 		break;
 	case ESP32LogLevel::Info:
-		print("INF ");
+		print("\e[1;92mINFO ");
 		break;
 	}
-
+	
 	va_list args;
 	va_start(args, format);
 	vsnprintf(buffer, sizeof(buffer), format, args);
