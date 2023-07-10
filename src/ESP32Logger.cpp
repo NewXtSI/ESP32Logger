@@ -31,7 +31,7 @@ void ESP32Logger::setLogLevel(ESP32LogLevel logLevel) {
 	_logLevel = logLevel;
 }
 
-void ESP32Logger::log(ESP32LogLevel logLevel, const char* format, ...) {
+void ESP32Logger::log(ESP32LogLevel logLevel, const char* message, va_list arg) {
 	char buffer[128];
 
 	if (!_isActive || _logLevel < logLevel)
@@ -69,14 +69,21 @@ void ESP32Logger::log(ESP32LogLevel logLevel, const char* format, ...) {
 		break;
 	}
 	
-	va_list args;
-	va_start(args, format);
-	vsnprintf(buffer, sizeof(buffer), format, args);
-	va_end(args);
+//	va_list args;
+//	va_start(args, format);
+	vsnprintf(buffer, sizeof(buffer), message, arg);
+//	va_end(args);
 
 	print(buffer);
 
 	printEoL();
+}
+
+void ESP32Logger::log(ESP32LogLevel logLevel, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    log(logLevel, format, args);
+    va_end(args);	
 } // void ESP32Logger::log(ESP32LogLevel logLevel, const char* format, ...)
 
 void ESP32Logger::print(const char* logLine) {

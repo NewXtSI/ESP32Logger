@@ -31,7 +31,8 @@ public:
 	void stop();
 	void setLogLevel(ESP32LogLevel logLevel);
 	void log(ESP32LogLevel logLevel, const char* message, ...);
-
+	void log(ESP32LogLevel logLevel, const char* message, va_list arg);
+	
 private:
 	ESP32LogLevel _logLevel = ESP32LogLevel::Info;
 	Print* _output = nullptr;
